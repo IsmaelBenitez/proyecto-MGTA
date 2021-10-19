@@ -30,20 +30,20 @@ fprintf('MAX Air Delay: %d min\n',MAXADelay);
 fprintf('-----------------------\n');
 
 
-radius=1000:100:2000;
+radius=0:100:2000;
 length=size(radius);
 i=1;
 VGroundDelay=zeros(1,length(2));
 VAirDelay=zeros(1,length(2));
 VUnrecDelay=zeros(1,length(2));
-while (i<length(2))
-    [ ~,~, ~, Exempt, ControlledGDP] = computeAircraftStatus(ETD,Distances,International,Hfile,radius,Controlled);
+while (i<=length(2))
+    [ ~,~, ~, Exempt, ControlledGDP] = computeAircraftStatus(ETD,Distances,International,Hfile,radius(i),Controlled);
     [~,GroundDelayGDP,AirDelayGDP,~]=assignSlotsGDP(slots,ControlledGDP, ETA, ETD, Hfile,Exempt);
     [VUnrecDelay(i)] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
     j=1;
     lenghtG=size(GroundDelayGDP);
     while (j<=lenghtG(1))
-        VGroundDelay(i)=VGroundDelay(i)+GroundDelay(j,2);
+        VGroundDelay(i)=VGroundDelay(i)+GroundDelayGDP(j,2);
         j=j+1;
     end
     j=1;

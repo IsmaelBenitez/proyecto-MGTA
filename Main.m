@@ -27,4 +27,4 @@ figure(3);
 plotHistograms(CTAGDP,AAR,PAAR,Hstart,Hend);
 [UnrecDelay] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
 figure(4);
-ResultsWP3(GroundDelayGDP,AirDelayGDP,ETD,Distances,International,Hfile,Controlled,slotsGDP,ETA,Hstart);
+ResultsWP3(GroundDelayGDP,AirDelayGDP,ETD,Distances,International,Hfile,Controlled,slots,ETA,Hstart);
