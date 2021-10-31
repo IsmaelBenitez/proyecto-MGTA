@@ -1,4 +1,4 @@
-function [slots,GroundDelay,AirDelay,CTA]=assignSlotsGDP(slots,Controlled, ETA, ETD, Hfile,Exempt)
+function [slots,GroundDelay,AirDelay,CTA]=assignSlotsGDP(slots,Controlled, ETA, ETD, Hfile,Exempt,Airlines)
 GroundDelay=[];
 AirDelay=[];
 ETAm=ETA(:,1)*60+ETA(:,2);
@@ -14,6 +14,7 @@ while (j<=length(1))
         
     else
         slots(i,3)=Exempt(j);
+        slots(i,4)=Airlines(Exempt(j));
         op=slotsm(i)-ETAm(Exempt(j));
         if (op<0)
             op=0;
@@ -45,6 +46,7 @@ while(i<=length(1) && j<=length2(1))
         
     else
         slots(i,3)=Controlled(j);
+        slots(i,4)=Airlines(Controlled(j));
         op=slotsm(i)-ETAm(Controlled(j));
         if (op<0)
             op=0;

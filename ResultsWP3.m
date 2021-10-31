@@ -1,4 +1,4 @@
-function [TGDelay,MAXGDelay,AGDelay,TADelay,MAXADelay,AADelay] = ResultsWP3(GroundDelay,AirDelay,ETD,Distances,International,Hfile,Controlled,slots,ETA,Hstart)
+function [TGDelay,MAXGDelay,AGDelay,TADelay,MAXADelay,AADelay] = ResultsWP3(GroundDelay,AirDelay,ETD,Distances,International,Hfile,Controlled,slots,ETA,Hstart,UnrecDelay,airlines)
 lenghtG=size(GroundDelay(:,2));
 i=1;
 TGDelay=0;
@@ -28,9 +28,10 @@ fprintf('Total Air Delay: %d min\n',TADelay);
 fprintf('Average Air Delay: %d min\n',round(AADelay));
 fprintf('MAX Air Delay: %d min\n',MAXADelay);
 fprintf('-----------------------\n');
+fprintf('Unrecoverable Delay: %d min\n',UnrecDelay);
 
 
-radius=0:100:2000;
+radius=0:100:4000;
 length=size(radius);
 i=1;
 VGroundDelay=zeros(1,length(2));
@@ -38,7 +39,7 @@ VAirDelay=zeros(1,length(2));
 VUnrecDelay=zeros(1,length(2));
 while (i<=length(2))
     [ ~,~, ~, Exempt, ControlledGDP] = computeAircraftStatus(ETD,Distances,International,Hfile,radius(i),Controlled);
-    [~,GroundDelayGDP,AirDelayGDP,~]=assignSlotsGDP(slots,ControlledGDP, ETA, ETD, Hfile,Exempt);
+    [~,GroundDelayGDP,AirDelayGDP,~]=assignSlotsGDP(slots,ControlledGDP, ETA, ETD, Hfile,Exempt,airlines);
     [VUnrecDelay(i)] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
     j=1;
     lenghtG=size(GroundDelayGDP);
@@ -59,6 +60,54 @@ plot(radius,VGroundDelay,'g');
 hold on;
 plot(radius,VAirDelay,'r');
 plot(radius,VUnrecDelay,'b');
+title('Delays in funtion of the radius');
+ylabel('Delays(min)');
+xlabel('radius(m)');
+legend("Ground Delay","Air Delay","Unrecoverable Delay");
+
+
+
+Hfile=[3 0];
+Mfile=Hfile(:,1)*60+Hfile(:,2);
+file=Mfile:30:480;
+length=size(file);
+radius=1000;
+i=1;
+VGroundDelay=zeros(1,length(2));
+VAirDelay=zeros(1,length(2));
+VUnrecDelay=zeros(1,length(2));
+
+while (i<=length(2))
+    Hfile=[ fix(file(i)/60) rem(file(i),60)];
+    [ ~,~, ~, Exempt, ControlledGDP] = computeAircraftStatus(ETD,Distances,International,Hfile,radius,Controlled);
+    [~,GroundDelayGDP,AirDelayGDP,~]=assignSlotsGDP(slots,ControlledGDP, ETA, ETD, Hfile,Exempt,airlines);
+    [VUnrecDelay(i)] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
+    j=1;
+    lenghtG=size(GroundDelayGDP);
+    while (j<=lenghtG(1))
+        VGroundDelay(i)=VGroundDelay(i)+GroundDelayGDP(j,2);
+        j=j+1;
+    end
+    j=1;
+    lenghtA=size(AirDelayGDP);
+    while (j<=lenghtA(1))
+        VAirDelay(i)=VAirDelay(i)+AirDelayGDP(j,2);
+        j=j+1;
+    end
+    
+    i=i+1;
+end
+
+figure(5);
+plot(file,VGroundDelay,'g');
+hold on;
+plot(file,VAirDelay,'r');
+plot(file,VUnrecDelay,'b');
+xticks([1:60:810]);
+xticklabels({0:13});
+title('Delays in function of Hfile');
+xlabel('time(h)');
+ylabel('Delay(min)');
 legend("Ground Delay","Air Delay","Unrecoverable Delay");
 end
 
