@@ -15,17 +15,18 @@ Hfile=[7 00];
 %WP2
 [NotAffected,Controlled] = computeAircraftStatusRBS(ETA,Hstart,HNoReg);
 [slotsRBS,GroundDelay,AirDelay,CTA]=assignSlotsRBS(slots,Controlled, ETA, ETD, Hfile);
-% figure(2);
-% plotHistograms(CTA,AAR,PAAR,Hstart,Hend);
-% ResultsWP2(GroundDelay,AirDelay);
+ figure(2);
+ plotHistograms(CTA,AAR,PAAR,Hstart,Hend);
+ ResultsWP2(GroundDelay,AirDelay);
 %------------------------------------------------------
 %WP3
 radius=1400;
 [ ExemptRadius,ExemptInternational, ExemptFlying, Exempt, ControlledGDP] = computeAircraftStatus(ETD,Distances,International,Hfile,radius,Controlled);
 [slotsGDP,GroundDelayGDP,AirDelayGDP,CTAGDP]=assignSlotsGDP(slots,ControlledGDP, ETA, ETD, Hfile,Exempt,airlines);
-% figure(3);
-% plotHistograms(CTAGDP,AAR,PAAR,Hstart,Hend);
-% [UnrecDelay] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
-% figure(4);
-% ResultsWP3(GroundDelayGDP,AirDelayGDP,ETD,Distances,International,Hfile,Controlled,slots,ETA,Hstart,UnrecDelay,airlines);
-[slotsGDP2,GroundDelayGDP2,cont] = ComputeCTACancellations(3,slotsGDP,GroundDelayGDP,AirDelayGDP,airlines,ETA);
+ figure(3);
+ plotHistograms(CTAGDP,AAR,PAAR,Hstart,Hend);
+ [UnrecDelay] = ComputeUnrecoverableDelay(ETD,Hstart,GroundDelayGDP);
+ figure(4);
+ ResultsWP3(GroundDelayGDP,AirDelayGDP,ETD,Distances,International,Hfile,Controlled,slots,ETA,Hstart,UnrecDelay,airlines);
+[slotsGDP2,GroundDelayGDP2,CTAGDP2] = ComputeCTACancellations(3,slotsGDP,GroundDelayGDP,AirDelayGDP,airlines,ETA);
+GHP(slots,Controlled,Hfile,Hstart,ETA);

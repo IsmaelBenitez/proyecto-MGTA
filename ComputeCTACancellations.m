@@ -1,4 +1,4 @@
-function [SlotsGDP,GroundDelayGDP,cont] = ComputeCTACancellations(airline,SlotsGDP,GroundDelayGDP,AirDelayGDP,airlines,ETA)
+function [SlotsGDP,GroundDelayGDP,CTA] = ComputeCTACancellations(airline,SlotsGDP,GroundDelayGDP,AirDelayGDP,airlines,ETA)
 slotsm=SlotsGDP(:,1)*60+SlotsGDP(:,2);
 ETAm=ETA(:,1)*60+ETA(:,2);
 i=1;
@@ -107,6 +107,37 @@ while (i<=length(1))
             
         
     end
-end         
+end
+length=size(ETAm(:));
+CTA=[zeros(length) zeros(length)];
+length=size(SlotsGDP(:,3));
+i=1;
+j=SlotsGDP(i,3);
+while(i<=j)
+    CTA(i,1)=ETA(i,1);
+    CTA(i,2)=ETA(i,2);
+    i=i+1;
+end
+i=1; 
+while (i<=length(1))
+    j=SlotsGDP(i,3);
+    if (j~=0)
+        CTA(j,1)=SlotsGDP(i,1);
+        CTA(j,2)=SlotsGDP(i,2);
+    end
+
+    i=i+1;
+end
+lenght=size(ETA);
+while(i<=lenght(1))
+    CTA(i,1)=ETA(i,1);
+    CTA(i,2)=ETA(i,2);
+    i=i+1;
+end
+    
+
+
+    
+
 end
 
