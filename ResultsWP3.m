@@ -99,8 +99,11 @@ while (i<=length(2))
 end
 
 figure(5);
-plot(file,VGroundDelay,'g');
 hold on;
+yyaxis left;
+plot(file,VGroundDelay,'g');
+ylabel('Delay(min)');
+yyaxis right;
 plot(file,VAirDelay,'r');
 plot(file,VUnrecDelay,'b');
 xticks([1:60:810]);
