@@ -17,6 +17,6 @@ ylabel('Delay (min)');
 plot(eps,average,'b')
 plot(eps,max,'g');
 plot(eps,dev,'k-');
-legend('Total Cost','Average Ground Delay','Max Ground Delay','Standar Deviation');
+legend('Total Cost','Average Ground Delay','Max Ground Delay','Standard Deviation');
 end
 

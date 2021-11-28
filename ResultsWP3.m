@@ -56,8 +56,11 @@ while (i<=length(2))
     
     i=i+1;
 end
-plot(radius,VGroundDelay,'g');
 hold on;
+yyaxis left;
+plot(radius,VGroundDelay,'g');
+
+yyaxis right;
 plot(radius,VAirDelay,'r');
 plot(radius,VUnrecDelay,'b');
 title('Delays in funtion of the radius');

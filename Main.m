@@ -31,4 +31,4 @@ radius=1400;
 [slotsGDP2,GroundDelayGDP2,CTAGDP2] = ComputeCTACancellations(3,slotsGDP,GroundDelayGDP,AirDelayGDP,airlines,ETA);
 %------------------------------------------------------
 %WP4
-[VAL,AirDelayGHP,GroundDelayGHP,TotalDelayGHP]=GHP(Controlled,Hstart,ETA,HNoReg,Hend,ConnectingPAX,PAX,0.5,Hfile,ETD,International);
+[VAL,AirDelayGHP,GroundDelayGHP,TotalDelayGHP]=GHP(Controlled,Hstart,ETA,HNoReg,Hend,ConnectingPAX,PAX,0.3,Hfile,ETD,International);
